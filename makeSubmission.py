@@ -26,8 +26,8 @@ def splitDataInTrainValidation(dataset, targets, valid_percent):
   return X_train, y_train, X_valid, y_valid
   
 
-#convertDigitsCsvToH5('Data/train.csv')
-X, y = loadDigitData('Data/train.h5')
+#convertDigitsCsvToH5('data/train.csv')
+X, y = loadDigitData('data/train.h5')
 X_train, y_train, X_valid, y_valid = splitDataInTrainValidation(X, y, 0.2)
 print(X_train.shape)
 print(y_train.shape)
