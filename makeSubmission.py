@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
 
 def convertDigitsCsvToH5(path):
   digits = pd.read_csv(path, dtype='uint8')
@@ -28,8 +30,9 @@ def splitDataInTrainValidation(dataset, targets, valid_percent):
 
 #convertDigitsCsvToH5('data/train.csv')
 X, y = loadDigitData('data/train.h5')
-X_train, y_train, X_valid, y_valid = splitDataInTrainValidation(X, y, 0.2)
-print(X_train.shape)
-print(y_train.shape)
-print(X_valid.shape)
-print(y_valid.shape)
+X_train, y_train, X_valid, y_valid = splitDataInTrainValidation(X[:10000], y[:10000], 0.4)
+knn = KNeighborsClassifier()
+knn.fit(X_train, y_train)
+print("Training done")
+y_pred = knn.predict(X_valid)
+print(metrics.classification_report(y_valid, y_pred))
