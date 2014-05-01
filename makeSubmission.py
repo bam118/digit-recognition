@@ -27,12 +27,14 @@ def splitDataInTrainValidation(dataset, targets, valid_percent):
   y_valid = targets[indices[-number_of_valid_samples:]]
   return X_train, y_train, X_valid, y_valid
   
+def classifyWithKNN(X_train, y_train, X_valid, y_valid):
+  knn = KNeighborsClassifier()
+  knn.fit(X_train, y_train)
+  print("Training done")
+  y_pred = knn.predict(X_valid)
+  print(metrics.classification_report(y_valid, y_pred))
 
 #convertDigitsCsvToH5('data/train.csv')
 X, y = loadDigitData('data/train.h5')
-X_train, y_train, X_valid, y_valid = splitDataInTrainValidation(X[:10000], y[:10000], 0.4)
-knn = KNeighborsClassifier()
-knn.fit(X_train, y_train)
-print("Training done")
-y_pred = knn.predict(X_valid)
-print(metrics.classification_report(y_valid, y_pred))
+X_train, y_train, X_valid, y_valid = splitDataInTrainValidation(X[:1000], y[:1000], 0.4)
+classifyWithKNN(X_train, y_train, X_valid, y_valid)
